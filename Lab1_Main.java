@@ -73,7 +73,7 @@ public class Main {
         firstText.division();
         firstText.changeCharacter(index, letter);
 
-        System.out.println("\n\nIzmenennii TEXT: \n"+ firstText.sText);
+        System.out.println("\n\nIzmenennii TEXT:\n"+ firstText.sText);
 
     }
 }
