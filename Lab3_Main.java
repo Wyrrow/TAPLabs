@@ -1,156 +1,116 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
-class Word
-{
-    String SomeWord;
 
-    public Word() throws IOException {
-        enterWord();
+class Word {
+    String text;
+    int countOfCharacters;
+
+    public Word() {
     }
 
-    public Word(String w)
-    {
-        enterWord(w);
+    public Word(String _text) {
+        text = _text;
     }
 
+    public void printText() {
+        System.out.println(text);
+    }
 
-   /* Word() throws IOException {
-        InputStreamReader is = new InputStreamReader(System.in);
-        BufferedReader bis = new BufferedReader(is);
-        System.out.println("\nYou want to draw line?(yes/no) ");
-        String choice = bis.readLine();
-        if (!choice.equals("yes")) {
-            enterWord();
+    public void printCountOfCharacters() {
+        countAllCharacters();
+
+        System.out.println("Count of all characters: " + String.valueOf(countOfCharacters));
+    }
+
+    public void enterText() {
+        System.out.print("Enter the word: ");
+        Scanner scan = new Scanner(System.in);
+        String _text = scan.next();
+        text = _text;
+    }
+
+    protected void countAllCharacters() {
+        int tmp = 0;
+        char[] textToChar = text.toCharArray();
+
+        for (int i = 0; i < textToChar.length; i++) {
+            tmp++;
         }
-        else
-            enterWord("line");
-    }*/
-
-
-
-    String enterWord() throws IOException {
-
-        InputStreamReader is = new InputStreamReader(System.in);
-        BufferedReader bis = new BufferedReader(is);
-
-        System.out.println("\nEnter your command: ");
-        SomeWord = bis.readLine();
-
-        return SomeWord;
-    }
-
-    String enterWord(String w) {
-
-        SomeWord = w ;
-        return SomeWord;
-    }
-
-    boolean decision()
-    {
-        if (!SomeWord.equals("line")) {
-            return false;
-        } else {
-            return true;
-        }
+        countOfCharacters = tmp;
     }
 
 
 }
 
-class Line extends Word
-{
+class Line extends Word {
+    int countOfSpaces;
+    int countOfSymbols;
 
-
-    public Line(String line) throws IOException {
-        super(line);
+    public Line() {
     }
 
-    public Line() throws IOException {
+    public Line(String _text) {
         super();
-
     }
 
-    public String choice() throws IOException {
-
-        boolean t = decision();
-
-        if(t == true)
-        {
-            System.out.println("\nwhich line do you want to draw? (straight / wavy / jagged)");
-
-            InputStreamReader is = new InputStreamReader(System.in);
-            BufferedReader bis = new BufferedReader(is);
-
-            String choice = bis.readLine();
-            return choice;
-        }
-        else
-        {
-            System.out.println("\nThe command is wrong");
-            String wrong ="404";
-            return wrong;
-        }
+    public void enterText() {
+        System.out.println("Enter the line: ");
+        Scanner scan = new Scanner(System.in);
+        String _text = scan.nextLine();
+        text = _text;
     }
 
+    @Override
+    public void printText() {
+        System.out.print("Our line is: ");
+        super.printText();
+    }
 
+    @Override
+    public void printCountOfCharacters() {
+        super.printCountOfCharacters();
+        System.out.println("Count of symbols: " + String.valueOf(countOfSymbols));
+        System.out.println("Count of spaces: " + String.valueOf(countOfSpaces));
+    }
 
-    void allProgram() throws IOException {
-      String command = choice();
-        if (!command.equals("straight")) {
-            if(command.equals("wavy"))
-            {
-                drawing(1);
+    @Override
+    protected void countAllCharacters() {
+        super.countAllCharacters();
+
+        int _spaces = 0;
+        char[] textToChar = text.toCharArray();
+
+        for (int i = 0; i < text.length(); i++) {
+            if (textToChar[i] == ' ') {
+                _spaces++;
             }
-            else if (command.equals("jagged"))
-            {
-                drawing((float) 0.1);
-            }
-            else
-            {
-                System.out.println(command);
-            }
-        } else {
-            drawing();
         }
 
+        countOfSpaces = _spaces;
+        countOfSymbols = countOfCharacters - countOfSpaces;
     }
-
-    void drawing()
-    {
-        System.out.println("\nYour line: --------------------------------------------");
-    }
-
-    void drawing(int tmp)
-    {
-        System.out.println("\nYour line: - - - - - - - - - - - - - - - - - - - - - - - - - -");
-    }
-
-    void drawing(float tmp)
-    {
-        System.out.println("\nYour line: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    }
-
-
-
 }
+package com.company;
+
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        String t ="" ;
-        InputStreamReader is = new InputStreamReader(System.in);
-        BufferedReader bis = new BufferedReader(is);
+        System.out.println("WORD:\n");
+        Word w1 = new Word();
+        w1.enterText();
+        w1.printText();
+        w1.printCountOfCharacters();
 
-
-        Line l1 = new Line("line");
-        Line l2 = new Line();
-        l1.allProgram();
-        l2.allProgram();
-
+        System.out.println("\n\nLINE:\n");
+        Line l1 = new Line();
+        l1.enterText();
+        l1.printText();
+        l1.printCountOfCharacters();
     }
 }
+
